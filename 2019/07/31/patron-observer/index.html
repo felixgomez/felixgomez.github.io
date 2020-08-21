@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang=es>
+<head>
+    <meta charset="utf-8">
+    
+    <title>El patrón observer | Blog personal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Hoy me ha tocado hablar en una charla en PHPVigo sobre el patrón Observer.Por aquí dejo la presentación (Observer a partir de la página 66) y un pequeño resumen.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="El patrón observer">
+<meta property="og:url" content="http://felixgomez.eu/2019/07/31/patron-observer/index.html">
+<meta property="og:site_name" content="Blog personal">
+<meta property="og:description" content="Hoy me ha tocado hablar en una charla en PHPVigo sobre el patrón Observer.Por aquí dejo la presentación (Observer a partir de la página 66) y un pequeño resumen.">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="http://felixgomez.eu/images/design-patterns/observer/binoculars-1280.png">
+<meta property="article:published_time" content="2019-07-31T00:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-21T15:36:17.428Z">
+<meta property="article:author" content="Félix Gómez">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="design-patterns">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://felixgomez.eu/images/design-patterns/observer/binoculars-1280.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Blog personal" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-113032755-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">Blog personal</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Inicio</a>
+                
+                    <a class="main-nav-link" href="/archives">Entradas</a>
+                
+                    <a class="main-nav-link" href="/categories">Categorías</a>
+                
+                    <a class="main-nav-link" href="/tags">Etiquetas</a>
+                
+                    <a class="main-nav-link" href="/categories/apuntes">Apuntes</a>
+                
+                    <a class="main-nav-link" href="/about">Sobre mí</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/5d24d359cfb991179c1e4981ea178518" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Teclea algo..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Entradas',
+            PAGES: 'Páginas',
+            CATEGORIES: 'Categorías',
+            TAGS: 'Etiquetas',
+            UNTITLED: '(Sin título)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Inicio</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Entradas</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categorías</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Etiquetas</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories/apuntes">Apuntes</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">Sobre mí</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/5d24d359cfb991179c1e4981ea178518?s=128" />
+            <h2 id="name">Félix Gómez</h2>
+            <h3 id="title">Senior developer @Ultreia. Coorganizer of @PHPVigo group at @VigoTechAllianc.</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Vigo, Galicia</span>
+            <a id="follow" target="_blank" href="https://twitter.com/felixgomezlopez">SEGUIR</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                8
+                <span>Entradas</span>
+            </div>
+            <div class="article-info-block">
+                15
+                <span>Etiquetas</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/felixgomez" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/felixgomezlopez" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main" class="post"><article id="post-patron-observer" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            El patrón observer
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2019/07/31/patron-observer/">
+            <time datetime="2019-07-31T00:00:00.000Z" itemprop="datePublished">31/07/2019</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/PHP/">PHP</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/PHP/Design-patterns/">Design patterns</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/design-patterns/" rel="tag">design-patterns</a>, <a class="tag-link-link" href="/tags/php/" rel="tag">php</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="/images/design-patterns/observer/binoculars-1280.png"></p>
+<p>Hoy me ha tocado hablar en una charla en <a target="_blank" rel="noopener" href="https://phpvigo.com/">PHPVigo</a> sobre el <strong>patrón Observer</strong>.<br>Por aquí dejo la <a target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1fSPNsZ9zT_IybxFlZCyi93pw9A9NSEu41SGjWhp8cp8/edit?usp=sharing">presentación</a> (Observer a partir de la página 66) y un pequeño resumen.</p>
+<a id="more"></a>
+
+<h2 id="Que-hace"><a href="#Que-hace" class="headerlink" title="Qué hace"></a>Qué hace</h2><p>Permite a un objeto mantener una lista de objetos a los que notifica cuando su estado cambia.</p>
+<h2 id="Conceptos-que-se-manejan"><a href="#Conceptos-que-se-manejan" class="headerlink" title="Conceptos que se manejan"></a>Conceptos que se manejan</h2><ul>
+<li><strong>SUBJECT (aka OBSERVABLE)</strong> El objeto que notifica su cambio de estado a los que lo observan.</li>
+<li><strong>OBSERVER</strong> Lista de objetos que mantiene el objeto observable y que son notificados por él.</li>
+</ul>
+<p><img src="/images/design-patterns/observer/observer-concepts.png"></p>
+<h2 id="Interfaces"><a href="#Interfaces" class="headerlink" title="Interfaces"></a>Interfaces</h2><p>La interfaz para el objeto <em>Observable</em> es:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Observable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">attach</span> (<span class="params">Observer $observer</span>)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">detach</span> (<span class="params">Observer $observer</span>)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">notify</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>y para el objeto observer:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span> (<span class="params">Observable $observable</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="El-patron-observer-en-la-SPL-Standard-PHP-Library"><a href="#El-patron-observer-en-la-SPL-Standard-PHP-Library" class="headerlink" title="El patrón observer en la SPL (Standard PHP Library)"></a>El patrón observer en la SPL (Standard PHP Library)</h2><p>La librería estándar de PHP dispone de una serie de interfaces para implementar este patrón y una clase (<strong>SplObjectStorage</strong>) que permite al <em>Observable</em> almacenar los <em>Observers</em> a los que tiene que notificar.</p>
+<p><img src="/images/design-patterns/observer/observer-spl.png"></p>
+<p><em>SplObjectStorage</em> dispone de los métodos <code>attach</code> y <code>detach</code> para añadir objectos o eliminarlos.</p>
+<h2 id="Ejemplo-de-implementacion"><a href="#Ejemplo-de-implementacion" class="headerlink" title="Ejemplo de implementación"></a>Ejemplo de implementación</h2><h3 id="ExampleSubject-Observable"><a href="#ExampleSubject-Observable" class="headerlink" title="ExampleSubject (Observable)"></a>ExampleSubject (Observable)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleSubject</span> <span class="keyword">implements</span> \<span class="title">SplSubject</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> $storage;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;storage = <span class="keyword">new</span> \<span class="built_in">SplObjectStorage</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">attach</span>(<span class="params">\<span class="built_in">SplObserver</span> $observer</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;storage-&gt;attach($observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">dettach</span>(<span class="params">\<span class="built_in">SplObserver</span> $observer</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;storage-&gt;dettach($observer);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">notify</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">$this</span>-&gt;storage <span class="keyword">as</span> $observer) &#123;</span><br><span class="line">            $observer-&gt;update(<span class="keyword">$this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>En la línea <code>7</code> inicializamos un <strong>SplObjectStorage</strong> donde poder almacenar los <em>Observers</em> y<br>en la línea <code>23</code> vemos que de forma opcional podemos pasar el propio <em>Observer</em> a los observables como parámetro.</p>
+<h3 id="ExampleObserver"><a href="#ExampleObserver" class="headerlink" title="ExampleObserver"></a>ExampleObserver</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleObserver</span> <span class="keyword">implements</span> \<span class="title">SplObserver</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params">\<span class="built_in">SplSubject</span> $subject</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $subject-&gt;attach(<span class="keyword">$this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span>(<span class="params">\<span class="built_in">SplSubject</span> $subject</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ($subject <span class="keyword">instanceof</span> ExampleSubject) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;doUpdate($subject);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">doUpdate</span>(<span class="params">ExampleSubject $subject</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// Something to do</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ejemplo-de-utilizacion"><a href="#Ejemplo-de-utilizacion" class="headerlink" title="Ejemplo de utilización"></a>Ejemplo de utilización</h2><p>Podéis ver un ejemplo muy sencillo en <a target="_blank" rel="noopener" href="https://github.com/phpvigo/PHPVigo-31-Patrones-de-software-en-la-practica">Github</a>.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://felixgomez.eu/2019/07/31/patron-observer/" data-id="cke4eca7v000d0fhm6jvsgzka" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://felixgomez.eu/2019/07/31/patron-observer/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://felixgomez.eu/2019/07/31/patron-observer/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/11/10/oshwdem/mi-primera-oshwdem/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más reciente</strong>
+            <div class="article-nav-title">
+                
+                    Mi primera OSHWDem
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2019/01/01/que-ordenador-me-compro-para-desarrollar/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Anterior</strong>
+            <div class="article-nav-title">¿Qué ordenador me compro para desarrollar?</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 Félix Gómez<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a target="_blank" rel="noopener" href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://felixgomez.eu/2019/07/31/patron-observer/';
+        
+        this.page.identifier = 'patron-observer';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'felixgomez' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML.js"></script>
+
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

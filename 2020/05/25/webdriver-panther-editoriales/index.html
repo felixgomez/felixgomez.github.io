@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang=es>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Web scraping rápido con Symfony Panther | Blog personal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Durante este confinamiento, que en mi caso ha sido con hijos en edad escolar, han ido aflorando muchas carencias tanto en contenidos digitales como en herramientas de comunicación por parte de la en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web scraping rápido con Symfony Panther">
+<meta property="og:url" content="http://felixgomez.eu/2020/05/25/webdriver-panther-editoriales/index.html">
+<meta property="og:site_name" content="Blog personal">
+<meta property="og:description" content="Durante este confinamiento, que en mi caso ha sido con hijos en edad escolar, han ido aflorando muchas carencias tanto en contenidos digitales como en herramientas de comunicación por parte de la en">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="http://felixgomez.eu/images/panther/panther_logo.png">
+<meta property="article:published_time" content="2020-05-25T00:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-21T15:36:17.428Z">
+<meta property="article:author" content="Félix Gómez">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Panther">
+<meta property="article:tag" content="scraping">
+<meta property="article:tag" content="BrowserKit">
+<meta property="article:tag" content="DomCrawler">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://felixgomez.eu/images/panther/panther_logo.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Blog personal" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-113032755-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">Blog personal</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Inicio</a>
+                
+                    <a class="main-nav-link" href="/archives">Entradas</a>
+                
+                    <a class="main-nav-link" href="/categories">Categorías</a>
+                
+                    <a class="main-nav-link" href="/tags">Etiquetas</a>
+                
+                    <a class="main-nav-link" href="/categories/apuntes">Apuntes</a>
+                
+                    <a class="main-nav-link" href="/about">Sobre mí</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/5d24d359cfb991179c1e4981ea178518" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Teclea algo..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Entradas',
+            PAGES: 'Páginas',
+            CATEGORIES: 'Categorías',
+            TAGS: 'Etiquetas',
+            UNTITLED: '(Sin título)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Inicio</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Entradas</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categorías</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Etiquetas</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories/apuntes">Apuntes</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">Sobre mí</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/5d24d359cfb991179c1e4981ea178518?s=128" />
+            <h2 id="name">Félix Gómez</h2>
+            <h3 id="title">Senior developer @Ultreia. Coorganizer of @PHPVigo group at @VigoTechAllianc.</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Vigo, Galicia</span>
+            <a id="follow" target="_blank" href="https://twitter.com/felixgomezlopez">SEGUIR</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                8
+                <span>Entradas</span>
+            </div>
+            <div class="article-info-block">
+                15
+                <span>Etiquetas</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/felixgomez" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/felixgomezlopez" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main" class="post"><article id="post-webdriver-panther-editoriales" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Web scraping rápido con Symfony Panther
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/05/25/webdriver-panther-editoriales/">
+            <time datetime="2020-05-25T00:00:00.000Z" itemprop="datePublished">25/05/2020</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Symfony/">Symfony</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Symfony/Panther/">Panther</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/BrowserKit/" rel="tag">BrowserKit</a>, <a class="tag-link-link" href="/tags/DomCrawler/" rel="tag">DomCrawler</a>, <a class="tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>, <a class="tag-link-link" href="/tags/Panther/" rel="tag">Panther</a>, <a class="tag-link-link" href="/tags/scraping/" rel="tag">scraping</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <img src="/images/panther/web_scraping_panther.png" class="">
+
+<p>Durante este confinamiento, que en mi caso ha sido con hijos en edad escolar, han ido aflorando muchas carencias tanto en contenidos digitales como en herramientas de comunicación por parte de la enseñanza pública. </p>
+<p>En concreto, durante el inicio del confinamiento muchos alumnos hicieron uso de servicios online ofrecidos por editoriales (al menos de aquellas que dieron acceso), ya que muchos dejaron sus libros físicamente en el colegio.</p>
+<p>La mayor parte de las editoriales no ofrecen la posibilidad de descarga directa de los contenidos, y la impresión directa en algunos casos no es tan directa como cabe esperar.</p>
+<p>Mi hija más pequeña tiene 8 años y utiliza libros de fichas para completar.</p>
+<p>Durante varios días muchos de los contenidos no estuvieron disponibles por lentitud, interrupciones e incidencias varias, mientras las editoriales (<em>supongo</em>) trataban de escalar los servicios.</p>
+<p>Entendía el tema de la lentitud, al fin y al cabo estábamos en una situación excepcional, pero una vez revisado el código de las webs comprobé que los servicios estaban claramente orientados a impedir, o al menos a dificultar, la reproducción y/o impresión de los contenidos: <strong>Login desde javascript, renderización de contenidos en Canvas, menús gráficos, mala semántica, navegación compleja, etc.</strong></p>
+<p>Mi paciencia acabó por consumirse después de varios días y de ahí surgió la idea este post: Recuperar los libros completos desde las páginas de un par de editoriales.</p>
+<a id="more"></a>
+
+<h1 id="El-protocolo-WebDriver-W3C-y-Symfony-Panther"><a href="#El-protocolo-WebDriver-W3C-y-Symfony-Panther" class="headerlink" title="El protocolo WebDriver (W3C) y Symfony Panther"></a>El protocolo WebDriver (W3C) y Symfony Panther</h1><p>Reconozco que hacía tiempo que no hacía <em>web scraping</em>, porque no había tenido la necesidad y el recuerdo no era bueno con herramientas tipo <em>CasperJS</em>. Cuando por mi cabeza ya pasaba hacer uso de <code>pip install scrapy</code> 😅  decidí darle una oportunidad a <a target="_blank" rel="noopener" href="https://github.com/symfony/panther">Symfony Panther</a> que ya había utilizado para <em>testing</em>.</p>
+<h2 id="La-especificacion-WebDriver"><a href="#La-especificacion-WebDriver" class="headerlink" title="La especificación WebDriver"></a>La especificación WebDriver</h2><p> Básicamente se trata de una interfaz de control remoto para introspección y control de navegadores. La especificación está inspirada y es compatible con en el famoso framework de automatización <a target="_blank" rel="noopener" href="https://www.selenium.dev/"><strong>Selenium</strong></a>.</p>
+<p>Si no conoces la especificación puedes consultarla <a target="_blank" rel="noopener" href="https://www.w3.org/TR/webdriver/">aquí</a>.</p>
+<p>Junto con esta especificación también puedes encontrar la definición de las interfaces necesarias para la manipulación del <em>DOM</em> y el comportamiento del navegador. Lo interesante es que las especificaciones son independientes del lenguaje de programación de la implementación final.</p>
+<h2 id="Symfony-Panther"><a href="#Symfony-Panther" class="headerlink" title="Symfony Panther"></a>Symfony Panther</h2><p><strong>¿Qué ofrece Symfony Panther?</strong> <em>Symfony Panther</em> implementa este conjunto de especificaciones haciendo uso de <a target="_blank" rel="noopener" href="https://github.com/php-webdriver/php-webdriver">php-webdriver</a> y de ciertos componentes bien conocidos de Symfony como <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/browser_kit.html">BrowserKit</a> y <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/dom_crawler.html">DomCrawler</a>.</p>
+<p> También añade lo necesario para facilitar el <em>testing</em> de aplicaciones (como una clase <code>PantherTestCase</code> y <em>assertions</em>, por ejemplo) y localiza automáticamente la instalación local de <em>Chrome</em> o <em>Firefox</em> mediante el uso de <a target="_blank" rel="noopener" href="https://chromedriver.chromium.org/">ChromeDriver</a> y/o <a target="_blank" rel="noopener" href="https://github.com/mozilla/geckodriver">GeckoDriver</a>.</p>
+<p>Si lo utilizas para <em>testing</em> no necesitas instalar un servidor web, ya que por defecto utiliza el <em>servidor web integrado de PHP</em>.</p>
+<p>En resumen, con un navegador web local y un PHP con <code>composer</code> ya tienes lo necesario para empezar.</p>
+<p>La programa final para <em>web scraping</em> de los libros resultó en poco más de 100 líneas de código (incluyendo namespaces y con formateado PSR-2), que pienso entra dentro de lo razonable.</p>
+<h1 id="Instalacion"><a href="#Instalacion" class="headerlink" title="Instalación"></a>Instalación</h1><p>Aunque hice uso de <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/console.html">console</a> y los conocidos <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/config.html">config</a>, <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/yaml.html">yaml</a>, <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/dependency_injection.html">dependency injection</a>, <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/dotenv.html">dotenv</a> y otros, su uso es es totalmente opcional.</p>
+<p>A partir de aquí me centraré fundamentalmente en <a target="_blank" rel="noopener" href="https://github.com/symfony/panther">Symfony Panther</a>.</p>
+<p>Comenzamos con la instalación de Panther con <code>composer</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer req symfony&#x2F;panther</span><br></pre></td></tr></table></figure>
+<p>Si lo utilizas para <em>testing</em>, estarás acostumbrado a instalarlo con <code>--dev</code>, pero no es el caso.</p>
+<p>Como primer paso lógico tenía que ser capaz de capturar todo el contenido de una página a un archivo (a poder ser un <em>pdf</em> o un <em>png</em>).</p>
+<p>Como en mi caso utilicé el navegador <em>Firefox</em></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Panther</span>\<span class="title">Client</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">$this</span>-&gt;client = Client::createFirefoxClient();</span><br></pre></td></tr></table></figure>
+
+<h2 id="Primera-request-y-primera-captura"><a href="#Primera-request-y-primera-captura" class="headerlink" title="Primera request y primera captura"></a>Primera request y primera captura</h2><p>Hacer una primera petición (<em>request</em>) a una página es directo</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Panther</span>\<span class="title">Client</span>;</span><br><span class="line">...</span><br><span class="line">$crawler = <span class="keyword">$this</span>-&gt;client-&gt;request(<span class="string">&#x27;GET&#x27;</span>, $initURL);</span><br></pre></td></tr></table></figure>
+
+<p>Y hacer un pantallazo del contenido mostrado en el navegador es cosa sencilla <em>a priori</em>. </p>
+<p>La documentación de <em>Symfony Panther</em> explica en uno de los ejemplos como realizar una captura de pantalla a través de</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span>-&gt;client-&gt;takeScreenshot(<span class="string">&#x27;filename.png&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>Pero <strong>¿y si necesito capturar un elemento en concreto?</strong></p>
+<p>En la documentación de <em>WebDriver</em> puedes encontrar un <a target="_blank" rel="noopener" href="https://github.com/php-webdriver/php-webdriver/wiki/Taking-Full-Screenshot-and-of-an-Element"><em>snippet</em> para esto precisamente</a>.</p>
+<p>El «truco» empleado está claro: hacer la captura de todo el contenido y posteriormente recortar la imagen en función de la ubicación y dimensiones del elemento en el que estamos interesados y que se le pasa a la función.</p>
+<p>Modifiqué un poco el código para adecuarlo a lo que necesitaba. Cambios triviales que tuvieron que ver con la organización y renombrado de los archivos para identificar las unidades o capítulos del libro de forma coherente.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">takeScreenshot</span>(<span class="params">$chapter, $page, WebDriverElement $element = <span class="literal">null</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    $filename = str_pad($chapter, <span class="number">2</span>, <span class="number">0</span>, STR_PAD_LEFT) . <span class="string">&#x27;-&#x27;</span> . str_pad($page, <span class="number">3</span>, <span class="number">0</span>, STR_PAD_LEFT);</span><br><span class="line"></span><br><span class="line">    $screenshot = $filename. <span class="string">&#x27;-orig.png&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    $element_screenshot = $filename.<span class="string">&#x27;.png&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    $element_width = $element-&gt;getSize()-&gt;getWidth();</span><br><span class="line">    $element_height = $element-&gt;getSize()-&gt;getHeight();</span><br><span class="line"></span><br><span class="line">    $element_src_x = $element-&gt;getLocation()-&gt;getX();</span><br><span class="line">    $element_src_y = $element-&gt;getLocation()-&gt;getY();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">$this</span>-&gt;client-&gt;takeScreenshot($screenshot);</span><br><span class="line">    <span class="keyword">if</span> (!file_exists($screenshot)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Exception</span>(<span class="string">&#x27;Could not save screenshot&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $src = imagecreatefrompng($screenshot);</span><br><span class="line">    $dest = imagecreatetruecolor($element_width, $element_height);</span><br><span class="line"></span><br><span class="line">    imagecopy($dest, $src, <span class="number">0</span>, <span class="number">0</span>, (<span class="keyword">int</span>)ceil($element_src_x), (<span class="keyword">int</span>)ceil($element_src_y), (<span class="keyword">int</span>)ceil($element_width),</span><br><span class="line">        (<span class="keyword">int</span>)ceil($element_height));</span><br><span class="line"></span><br><span class="line">    imagepng($dest, $element_screenshot);</span><br><span class="line"></span><br><span class="line">    unlink($screenshot);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!file_exists($element_screenshot)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> \<span class="built_in">Exception</span>(<span class="string">&#x27;Could not save element screenshot&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> $element_screenshot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="No-veo-el-navegador-durante-la-ejecucion"><a href="#No-veo-el-navegador-durante-la-ejecucion" class="headerlink" title="No veo el navegador durante la ejecución"></a>No veo el navegador durante la ejecución</h2><p>Existen ciertas <a target="_blank" rel="noopener" href="https://github.com/symfony/panther#environment-variables">variables de entorno</a> que puedes tocar para modificar el comportamiento de <em>Panther</em> y del navegador. Algunas variables afectan tanto a <em>Firefox</em> como a <em>Chrome</em> y otras son exclusivas de cada uno.</p>
+<p>En concreto, si quieres ver lo que va haciendo el navegador durante la ejecución lo que necesitas es modificar la variable de entorno <code>PANTHER_NO_HEADLESS</code> (válida tanto para <em>Firefox</em> como para <em>Chrome</em>).</p>
+<p>Puedes hacer uso de <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/dotenv.html">dotenv</a> pero un</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export PANTHER_NO_HEADLESS&#x3D;1</span><br></pre></td></tr></table></figure>
+<p>antes de la ejecución de tu código es suficiente.</p>
+<h1 id="Primeras-preguntas"><a href="#Primeras-preguntas" class="headerlink" title="Primeras preguntas"></a>Primeras preguntas</h1><p>Llegado a este punto tanto si has hecho <em>web scraping</em> con anterioridad como si no las primeras dudas que pueden surgir son</p>
+<ul>
+<li><p><strong>¿En qué resolución del navegador se realiza la captura? ¿Se puede cambiar?</strong></p>
+</li>
+<li><p><strong>¿En qué momento puedo saber si el contenido está ya totalmente renderizado para poder realizar la captura con lo que necesito?</strong></p>
+</li>
+</ul>
+<h2 id="La-resolucion-de-pantalla"><a href="#La-resolucion-de-pantalla" class="headerlink" title="La resolución de pantalla"></a>La resolución de pantalla</h2><p>En este caso la calidad final del libro depende directamente de la calidad de la captura y ésta directamente de la resolución de la pantalla cuando se realiza.</p>
+<p>Si haces <em>testing end-to-end</em> este factor también es importante para poder comprobar si el contenido adaptable (<em>responsive</em>) se está comportando como debe.</p>
+<p>Este método <code>manage()</code> del cliente <em>Panther</em> permite trabajar con <em>Cookies</em> y su método <code>window()</code> permite trabajar con tamaños (redimensionar, maximizar y minimizar) y orientaciones de pantalla.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Panther</span>\<span class="title">Client</span>;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">$crawler = <span class="keyword">$this</span>-&gt;client-&gt;request(<span class="string">&#x27;GET&#x27;</span>, $initURL);</span><br><span class="line"></span><br><span class="line"><span class="keyword">$this</span>-&gt;client</span><br><span class="line">    -&gt;manage()</span><br><span class="line">    -&gt;window()</span><br><span class="line">    -&gt;setSize(<span class="keyword">new</span> WebDriverDimension(<span class="number">1920</span>, <span class="number">1080</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="Timeouts-y-esperas-con-wait-y-waitFor"><a href="#Timeouts-y-esperas-con-wait-y-waitFor" class="headerlink" title="Timeouts y esperas con wait y waitFor"></a><em>Timeouts</em> y esperas con <code>wait</code> y <code>waitFor</code></h2><p>Seguro que lo primero que se te ha pasado por la cabeza para parar la ejecución y tener tiempo de ver el contenido del navegador es hacer un <code>sleep($number_of_seconds)</code> ¿a qué sí? 😛</p>
+<p>Aunque puedes hacerlo, lo aconsejado de forma general es hacer uso de las funciones del cliente <em>WebDriver</em> (al que se accede desde el cliente <em>Panther</em>) como se indica en la <a target="_blank" rel="noopener" href="https://github.com/php-webdriver/php-webdriver/wiki/HowTo-Wait">wiki de php-webdriver</a>.</p>
+<p><em>WebDriver</em> define dos tipos de <strong>espera</strong>:</p>
+<ol>
+<li><p><strong>Implícita</strong>: Consiste en establecer un tiempo de espera o <em>timeout</em> mientras trata de encontrar elementos (en caso en que éstos no estén disponibles de forma inmediata). Por defecto el valor de ese <em>timeout</em> es <code>0</code> y una vez que se asigna su valor se mantiene durante el tiempo de vida del cliente. </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$client-&gt;manage()-&gt;timeouts()-&gt;implicitWait(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Explícita</strong>: Es la recomendada y se utiliza normalmente en combinación con distintas condiciones que puedes consultar en la <a target="_blank" rel="noopener" href="https://github.com/php-webdriver/php-webdriver/wiki/HowTo-Wait">wiki de php-webdriver</a>. Para este tipo de espera se utiliza función <code>wait()</code> del cliente <em>Panther</em> (que llama por debajo a esta función de <em>WebDriver</em>): </p>
+</li>
+<li><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Construct a new WebDriverWait by the current WebDriver instance.</span></span><br><span class="line"><span class="comment"> * Sample usage:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *   $driver-&gt;wait(20, 1000)-&gt;until(</span></span><br><span class="line"><span class="comment"> *     WebDriverExpectedCondition::titleIs(&#x27;WebDriver Page&#x27;)</span></span><br><span class="line"><span class="comment"> *   );</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> int $timeout_in_second</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> int $interval_in_millisecond</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> WebDriverWait</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">wait</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    $timeout_in_second = <span class="number">30</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    $interval_in_millisecond = <span class="number">250</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>El primer parámetro es el <em>timeout</em> (el tiempo máximo en el que se da como no cumplida la condición que sigue) y el segundo indica cada cuánto se ha de comprobar la condición.</p>
+<p>Si no se le pasan parámetros a <code>wait()</code> los valores del código anterior son los que se toman por defecto: <code>30s</code> para el <em>timeout</em> y <code>250ms</code> para el <em>intervalo de espera</em>.</p>
+</li>
+</ol>
+<p>Una consulta típica con <code>wait</code> tiene es del tipo </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Facebook</span>\<span class="title">WebDriver</span>\<span class="title">WebDriverExpectedCondition</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Facebook</span>\<span class="title">WebDriver</span>\<span class="title">WebDriverBy</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">$this</span>-&gt;client-&gt;navigate()-&gt;to($url);</span><br><span class="line"><span class="keyword">$this</span>-&gt;client</span><br><span class="line">    -&gt;wait(<span class="number">30</span>, <span class="number">250</span>)</span><br><span class="line">    -&gt;until(WebDriverExpectedCondition::elementToBeClickable(</span><br><span class="line">        WebDriverBy::id(<span class="string">&#x27;elementId&#x27;</span>))</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<p>Donde el método <code>navigate</code> hace exactamente lo que crees que hace.</p>
+<p>Además de este método, <em>Panther</em> nos proporciona <code>waitFor</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">waitFor(</span><br><span class="line">    <span class="keyword">string</span> $locator,</span><br><span class="line">    <span class="keyword">int</span> $timeoutInSecond = <span class="number">30</span>,</span><br><span class="line">    <span class="keyword">int</span> $intervalInMillisecond = <span class="number">250</span>)</span><br></pre></td></tr></table></figure>
+<p> pensado para ir directamente a la operación más común: **esperar hasta que el elemento especificado en <code>$locator</code> se renderice **.</p>
+<p> Aquí <code>$locator</code> es un <em>string</em> puede ser tanto un selector <em>CSS</em> como <em>XPath</em>.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span>-&gt;client-&gt;navigate()-&gt;to($url);</span><br><span class="line"><span class="keyword">$this</span>-&gt;client-&gt;waitFor(<span class="string">&#x27;.element&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="¿Y-que-pasa-si-utilizo-sleep-para-esperar"><a href="#¿Y-que-pasa-si-utilizo-sleep-para-esperar" class="headerlink" title="¿Y qué pasa si utilizo sleep() para esperar?"></a>¿Y qué pasa si utilizo <code>sleep()</code> para esperar?</h2><p>Pues corres el riesgo de que por algún pequeño corte o por lentitud en el acceso a internet tu script de <em>scraping</em> deje de funcionar.</p>
+<p>Una de las cosas que hace <code>waitFor</code> es crear un nuevo <em>crawler</em> (hablo un poco de él en el siguiente punto) asociado al cliente <em>Panther</em> porque está a la espera de que se produzca un cambio en el DOM.</p>
+<p>Si utilizas <code>sleep()</code> estarás obligado llamar a <code>$client-&gt;refreshCrawler()</code> cada vez que navegues entre páginas o cuando cambie el DOM por otro tipo de interacción.</p>
+<p>Dicho esto, si estás en modo <em>debug</em> <code>PANTHER_NO_HEADLESS</code> y quieres parar la ejecución para poder visualizar un error o verificar que un comportamiento esté funcionando de forma correcta <code>sleep</code> es una opción.</p>
+<h1 id="Navegacion-interaccion-y-recuperacion-de-datos"><a href="#Navegacion-interaccion-y-recuperacion-de-datos" class="headerlink" title="Navegación, interacción y recuperación de datos"></a>Navegación, interacción y recuperación de datos</h1><p>En el apartado anterior he hablado del <code>crawler</code>. El componente <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/dom_crawler.html"><em>DomCrawler</em></a> tiene como misión facilitar la navegación a través del <em>DOM</em> en documentos <em>HTML</em> y <em>XML</em>.</p>
+<p>Podemos acceder al <code>crawler</code> de diferentes maneras</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Obtaining the $crawler</span></span><br><span class="line">$crawler = <span class="keyword">$this</span>-&gt;client-&gt;request(<span class="string">&#x27;GET&#x27;</span>, $initUrl); <span class="comment">// From simple request</span></span><br><span class="line"><span class="keyword">$this</span>-&gt;client-&gt;waitFor(<span class="string">&#x27;.element&#x27;</span>); <span class="comment">// updates the crawler associated to the client</span></span><br><span class="line">$crawler = <span class="keyword">$this</span>-&gt;client-&gt;getCrawler();</span><br><span class="line">$crawler = <span class="keyword">$this</span>-&gt;client-&gt;refreshCrawler(); <span class="comment">// Forces crawler refresh</span></span><br><span class="line">...</span><br><span class="line"><span class="comment">// Examples</span></span><br><span class="line">$numberUnits = $crawler-&gt;filter(<span class="string">&#x27;a.descargas_uni&#x27;</span>)-&gt;count();</span><br><span class="line">$title = $crawler-&gt;filter(<span class="string">&#x27;#titulo_cent&#x27;</span>)-&gt;getText();</span><br><span class="line">$chapter = $crawler-&gt;filter(<span class="string">&#x27;a.descargas_uni&#x27;</span>)-&gt;getElement(<span class="number">0</span>)-&gt;getText();</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>A partir de aquí el cliente de <em>Panther</em> nos permite interactuar de forma directa para enviar formularios, hacer clics directamente sobre elementos, movernos hacia delante y hacia atrás en el navegador, etc.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$crawler-&gt;filter(<span class="string">&#x27;a.descargas_uni&#x27;</span>)-&gt;getElement(<span class="number">1</span>)-&gt;click();</span><br><span class="line"><span class="keyword">$this</span>-&gt;client-&gt;waitFor(<span class="string">&#x27;.element&#x27;</span>); <span class="comment">// Creates a new Crawler</span></span><br><span class="line"><span class="keyword">$this</span>-&gt;client-&gt;navigate()-&gt;to($otherURL);</span><br><span class="line"><span class="keyword">$this</span>-&gt;client-&gt;waitFor(<span class="string">&#x27;.element2&#x27;</span>); <span class="comment">// Creates a new Crawler</span></span><br></pre></td></tr></table></figure>
+<h1 id="Ejecutando-Javascript-Total-control-😏"><a href="#Ejecutando-Javascript-Total-control-😏" class="headerlink" title="Ejecutando Javascript. Total control 😏"></a>Ejecutando Javascript. <em>Total control</em> 😏</h1><p>Todo lo anterior no bastó para llevar a buen término el <em>web scraping</em> de los libros de la editorial online, como os podéis imaginar.</p>
+<p>Fue necesario hacer <em>submit</em> de algún formulario, realizar paginación sobre contenido, y alguna otra interacción <strong>directamente mediante <em>javascript</em>.</strong> </p>
+<p>Para ello el cliente dispone de un útil <code>executeScript</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span>-&gt;client</span><br><span class="line">    -&gt;executeScript(<span class="string">&quot;document.getElementsByClassName(&#x27;sig-p&#x27;)[0].click()&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Con todos estos ingredientes ya solo quedaba recostarse en la silla y esperar hasta que todas las imágenes estuviesen listas y organizadas</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$pageElements = <span class="keyword">$this</span>-&gt;client-&gt;getCrawler()-&gt;filter(<span class="string">&#x27;div.pc&#x27;</span>);</span><br><span class="line">$numberPages = $pageElements-&gt;count();</span><br><span class="line"></span><br><span class="line">$io-&gt;title(sprintf(<span class="string">&quot;Unit: %d (%d pages)&quot;</span>, $chapter, $numberPages));</span><br><span class="line">$io-&gt;progressStart($numberPages);</span><br><span class="line"><span class="keyword">while</span> ($page &lt; $numberPages) &#123;</span><br><span class="line">    $element = $pageElements-&gt;getElement($page);</span><br><span class="line">    <span class="keyword">$this</span>-&gt;takeScreenshot($chapter, $page + <span class="number">1</span>, $element);</span><br><span class="line">    $page++;</span><br><span class="line">    $io-&gt;progressAdvance();</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h1 id="Generando-el-PDF-a-partir-de-las-imagenes"><a href="#Generando-el-PDF-a-partir-de-las-imagenes" class="headerlink" title="Generando el PDF a partir de las imágenes"></a>Generando el PDF a partir de las imágenes</h1><p>Siempre te puedes liar la manta a la cabeza y tirar de los paquetes típicos para la generación de PDF, como <a target="_blank" rel="noopener" href="https://packagist.org/packages/dompdf/dompdf">dompdf</a> o <a target="_blank" rel="noopener" href="https://packagist.org/packages/tecnickcom/tcpdf">tcpdf</a>.</p>
+<p>Pero este no es el caso y con <a target="_blank" rel="noopener" href="https://imagemagick.org/">ImageMagick</a> ya disponemos de lo necesario.</p>
+<p>Una vez organizadas las imágenes con nombres correlativos (por ejemplo) <em>ImageMagick</em> hace el resto:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">convert *.png -quality 100 filename.pdf</span><br></pre></td></tr></table></figure>
+
+<p>Si queréis utilizar <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/console.html">symfony/console</a> y <a target="_blank" rel="noopener" href="https://symfony.com/doc/current/components/process.html">symfony/process</a> esto lo podéis poner como:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Console</span>\<span class="title">Command</span>\<span class="title">Command</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Console</span>\<span class="title">Input</span>\<span class="title">InputInterface</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Console</span>\<span class="title">Output</span>\<span class="title">OutputInterface</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Console</span>\<span class="title">Style</span>\<span class="title">SymfonyStyle</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Process</span>\<span class="title">Process</span>;</span><br><span class="line">...</span><br><span class="line">$io-&gt;section(<span class="string">&#x27;Beginning PDF generation from images&#x27;</span>);</span><br><span class="line">$process = <span class="keyword">new</span> Process([<span class="string">&#x27;convert&#x27;</span>, <span class="string">&#x27;*.png&#x27;</span>, <span class="string">&#x27;-quality&#x27;</span>, <span class="string">&#x27;100&#x27;</span>, <span class="string">&#x27;book.pdf&#x27;</span>]);</span><br><span class="line">$process-&gt;run();</span><br><span class="line"><span class="comment">// Only if you want to get rid of the images after completion</span></span><br><span class="line">array_map(<span class="string">&#x27;unlink&#x27;</span>, glob(<span class="string">&quot;*.png&quot;</span>));</span><br><span class="line">$io-&gt;success(<span class="string">&#x27;Book ready!!!&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusión"></a>Conclusión</h1><p>En este post solo se han arañado las posibilidades más básicas de <em>Symfony Panther</em>. Lo necesario para un primer proyecto. En un <em>web scraping</em> un poco más serio lo habitual es que tengamos que hacer uso de <em>proxies</em> y otras opciones un poco más avanzadas que también están disponibles.</p>
+<p>Decir también que es un software en continuo desarrollo que tiene algunas limitaciones: </p>
+<ul>
+<li>Solo están soportados documentos <em>HTML</em> (no XML)</li>
+<li>No está soportada la actualización de documentos</li>
+<li>El envío de formularios utilizando la sintaxis de <em>arrays</em> multidimensionales de PHP no funciona</li>
+<li>No funcionan los métodos que devuelven una instancia de <code>\DomElement</code> (porque la librería utiliza <code>WebDriverElement</code> internamente).</li>
+</ul>
+<p>Pese a estas limitaciones es un proyecto muy útil que bien merece una estrella en su <a target="_blank" rel="noopener" href="https://github.com/symfony/panther">Github</a> y un agradecimiento a <a target="_blank" rel="noopener" href="https://dunglas.fr/">Kévin Dunglas</a> y a <a target="_blank" rel="noopener" href="https://les-tilleuls.coop/">Les-Tilleuls.coop</a> por el apoyo al proyecto.</p>
+<h2 id="Save-the-panthers"><a href="#Save-the-panthers" class="headerlink" title="Save the panthers"></a>Save the panthers</h2><p>Paso a reproducir aquí también un mensaje que aparece en el Readme del repositorio oficial de <em>Symfony Panther</em></p>
+<blockquote>
+<p>Many of the wild cat species are highly threatened. If you like this software, help save the (real) panthers by <a target="_blank" rel="noopener" href="https://www.panthera.org/donate">donating to the Panthera organization</a>.</p>
+</blockquote>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://felixgomez.eu/2020/05/25/webdriver-panther-editoriales/" data-id="cke4eca8t00350fhm7l8bbozz" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://felixgomez.eu/2020/05/25/webdriver-panther-editoriales/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://felixgomez.eu/2020/05/25/webdriver-panther-editoriales/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/06/02/astronomy/mi-iniciacion-astronomia/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más reciente</strong>
+            <div class="article-nav-title">
+                
+                    Mi iniciación a la astronomía (parte I) - Prismáticos
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2019/12/01/que-ordenador-me-compro-para-desarrollar-ii/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Anterior</strong>
+            <div class="article-nav-title">¿Qué ordenador me compro para desarrollar? II ¡UPDATE!</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 Félix Gómez<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a target="_blank" rel="noopener" href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://felixgomez.eu/2020/05/25/webdriver-panther-editoriales/';
+        
+        this.page.identifier = 'webdriver-panther-editoriales';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'felixgomez' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML.js"></script>
+
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>
