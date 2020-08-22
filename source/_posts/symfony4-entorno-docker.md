@@ -7,6 +7,7 @@ tags:
     - Docker
     - docker-compose
 thumbnail: /images/docker-logo.png
+date: 2019-01-01
 ---
 
 Ha quedado atrás el tiempo en que para poder desarrollar en PHP había que instalar un entorno en función del sistema operativo, necesidades de versiones de los diferentes elementos de infraestructura y además hacerlo para cada proyecto.
