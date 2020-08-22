@@ -226,145 +226,6 @@ ga('send', 'pageview');
 
             
             <section id="main">
-    <article id="post-symfony4-entorno-docker" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2020/08/21/symfony4-entorno-docker/">Entorno de desarrollo con Docker para Symfony4</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2020/08/21/symfony4-entorno-docker/">
-            <time datetime="2020-08-21T15:36:17.428Z" itemprop="datePublished">21/08/2020</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Devops/">Devops</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Devops/PHP/">PHP</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>, <a class="tag-link-link" href="/tags/docker-compose/" rel="tag">docker-compose</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>Ha quedado atrás el tiempo en que para poder desarrollar en PHP había que instalar un entorno en función del sistema operativo, necesidades de versiones de los diferentes elementos de infraestructura y además hacerlo para cada proyecto.</p>
-<p>La necesidad de sincronizar la información de infraestructura como se puede hacer con el código da pie al concepto de <strong>“Infrastructure as code”</strong>.</p>
-<blockquote><p>The enabling idea of infrastructure as code is that the systems and devices wich are used to run software can be treated as if they, themselves, are software.</p>
-<footer><strong>Kief Morris @kief</strong><cite>Author of Infrastructure as Code (O'Reilly)</cite></footer></blockquote>
-
-<p>Veremos como como configurar el entorno local para programar con Symfony4 con <strong>Docker</strong>.</p>
-<p>El código se encuentra en <a target="_blank" rel="noopener" href="https://github.com/felixgomez/docker-symfony4">https://github.com/felixgomez/docker-symfony4</a>.</p></p>
-            <p class="article-more-link">
-                <a href="/2020/08/21/symfony4-entorno-docker/#more">Leer más</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://felixgomez.eu/2020/08/21/symfony4-entorno-docker/" data-id="cke4eca7z000j0fhmccoeahes" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://felixgomez.eu/2020/08/21/symfony4-entorno-docker/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://felixgomez.eu/2020/08/21/symfony4-entorno-docker/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <article id="post-astronomy/mi-iniciacion-astronomia" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -423,7 +284,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://felixgomez.eu/2020/06/02/astronomy/mi-iniciacion-astronomia/" data-id="cke4eca8q00300fhmfbmwav1e" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://felixgomez.eu/2020/06/02/astronomy/mi-iniciacion-astronomia/" data-id="cke5dgoxa000xzthog9g5h5yf" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -564,7 +425,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://felixgomez.eu/2020/05/25/webdriver-panther-editoriales/" data-id="cke4eca8t00350fhm7l8bbozz" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://felixgomez.eu/2020/05/25/webdriver-panther-editoriales/" data-id="cke5dgoxz003kzthofw0cdvio" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -698,7 +559,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://felixgomez.eu/2019/12/01/que-ordenador-me-compro-para-desarrollar-ii/" data-id="cke4eca7w000e0fhmcrpk62p3" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://felixgomez.eu/2019/12/01/que-ordenador-me-compro-para-desarrollar-ii/" data-id="cke5dgox0000ezthoa5ged0fa" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -833,7 +694,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://felixgomez.eu/2019/11/10/oshwdem/mi-primera-oshwdem/" data-id="cke4eca8s00320fhmci5642d2" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://felixgomez.eu/2019/11/10/oshwdem/mi-primera-oshwdem/" data-id="cke5dgoxy003jzthobr9dcwrr" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -967,7 +828,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://felixgomez.eu/2019/07/31/patron-observer/" data-id="cke4eca7v000d0fhm6jvsgzka" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://felixgomez.eu/2019/07/31/patron-observer/" data-id="cke5dgowz000dzthof7sb2fos" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1105,7 +966,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://felixgomez.eu/2019/01/01/que-ordenador-me-compro-para-desarrollar/" data-id="cke4eca7y000i0fhm5i9x0e9s" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://felixgomez.eu/2019/01/01/que-ordenador-me-compro-para-desarrollar/" data-id="cke5dgox2000izthoe3rwfmq5" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1183,6 +1044,145 @@ ga('send', 'pageview');
 
 
 
+    <article id="post-symfony4-entorno-docker" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2019/01/01/symfony4-entorno-docker/">Entorno de desarrollo con Docker para Symfony4</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2019/01/01/symfony4-entorno-docker/">
+            <time datetime="2019-01-01T00:00:00.000Z" itemprop="datePublished">01/01/2019</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Devops/">Devops</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Devops/PHP/">PHP</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>, <a class="tag-link-link" href="/tags/docker-compose/" rel="tag">docker-compose</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>Ha quedado atrás el tiempo en que para poder desarrollar en PHP había que instalar un entorno en función del sistema operativo, necesidades de versiones de los diferentes elementos de infraestructura y además hacerlo para cada proyecto.</p>
+<p>La necesidad de sincronizar la información de infraestructura como se puede hacer con el código da pie al concepto de <strong>“Infrastructure as code”</strong>.</p>
+<blockquote><p>The enabling idea of infrastructure as code is that the systems and devices wich are used to run software can be treated as if they, themselves, are software.</p>
+<footer><strong>Kief Morris @kief</strong><cite>Author of Infrastructure as Code (O'Reilly)</cite></footer></blockquote>
+
+<p>Veremos como como configurar el entorno local para programar con Symfony4 con <strong>Docker</strong>.</p>
+<p>El código se encuentra en <a target="_blank" rel="noopener" href="https://github.com/felixgomez/docker-symfony4">https://github.com/felixgomez/docker-symfony4</a>.</p></p>
+            <p class="article-more-link">
+                <a href="/2019/01/01/symfony4-entorno-docker/#more">Leer más</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://felixgomez.eu/2019/01/01/symfony4-entorno-docker/" data-id="cke5dgox3000jzthoa31u8d9v" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://felixgomez.eu/2019/01/01/symfony4-entorno-docker/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://felixgomez.eu/2019/01/01/symfony4-entorno-docker/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-comandos-docker" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -1237,7 +1237,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://felixgomez.eu/2018/01/23/comandos-docker/" data-id="cke4eca7r00090fhmc2b21k05" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://felixgomez.eu/2018/01/23/comandos-docker/" data-id="cke5dgoww0009ztho93drc5c2" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1328,25 +1328,6 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2020/08/21/symfony4-entorno-docker/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/images/docker-logo.png)" alt="Entorno de desarrollo con Docker para Symfony4" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Devops/">Devops</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Devops/PHP/">PHP</a></p>
-                            <p class="item-title"><a href="/2020/08/21/symfony4-entorno-docker/" class="title">Entorno de desarrollo con Docker para Symfony4</a></p>
-                            <p class="item-date"><time datetime="2020-08-21T15:36:17.428Z" itemprop="datePublished">21/08/2020</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
                             <a href="/2020/06/02/astronomy/mi-iniciacion-astronomia/" class="thumbnail">
     
     
@@ -1420,6 +1401,25 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/31/patron-observer/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/design-patterns/observer/binoculars-1280.png)" alt="El patrón observer" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/PHP/">PHP</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/PHP/Design-patterns/">Design patterns</a></p>
+                            <p class="item-title"><a href="/2019/07/31/patron-observer/" class="title">El patrón observer</a></p>
+                            <p class="item-date"><time datetime="2019-07-31T00:00:00.000Z" itemprop="datePublished">31/07/2019</time></p>
+                        </div>
+                    </li>
+                
             </ul>
         </div>
     </div>
@@ -1438,7 +1438,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">agosto 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">junio 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mayo 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">diciembre 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">noviembre 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">julio 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">enero 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">enero 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">junio 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">mayo 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">diciembre 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">noviembre 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">julio 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">enero 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">enero 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
